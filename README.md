@@ -1,4 +1,14 @@
 # EchoVision: Local AI Chatbot with Image Generation & Multilingual Support
+
+[![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-310/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115.0-green.svg)](https://fastapi.tiangolo.com/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.38.0-darkred.svg)](https://streamlit.io/)
+[![Mistral 7B](https://img.shields.io/badge/LLM-Mistral%207B%20Instruct-8000dd?logo=data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjODAwMGRkIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCI+PHJlY3Qgd2lkdGg9IjEwIiBoZWlnaHQ9IjEwIiByeD0iMyIgLz48dGV4dCB4PSI1IiB5PSI3IiBmb250LXNpemU9IjciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IndoaXRlIj5NTDwvdGV4dD48L3N2Zz4=)](https://mistral.ai/news/announcing-mistral-7b/)
+[![Stable Diffusion v1.5](https://img.shields.io/badge/diffusion-Stable%20Diffusion%20v1.5-16B9FA?logo=data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMTZCOUZBIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCI+PHJlY3Qgd2lkdGg9IjEwIiBoZWlnaHQ9IjEwIiByeD0iMyIvPjx0ZXh0IHg9IjUiIHk9IjciIGZvbnQtc2l6ZT0iNyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPlNEPC90ZXh0Pjwvc3ZnPg==)](https://huggingface.co/runwayml/stable-diffusion-v1-5)
+[![Status: Active](https://img.shields.io/badge/status-active-brightgreen.svg)]()
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-blue.svg?style=flat-square)](https://makeapullrequest.com)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 Welcome to EchoVision, an advanced local AI chatbot combining the power of the Mistral 7B large language model with Stable Diffusion for on-device conversational AI and image generation. Designed for efficiency and usability on consumer hardware (like RTX 3050 GPUs), EchoVision supports multiple languages and features a sleek web interface.
 
 ---
