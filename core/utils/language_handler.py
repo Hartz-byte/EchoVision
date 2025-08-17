@@ -23,49 +23,74 @@ class LanguageHandler:
         
         # System prompts for each language
         self.system_prompts = {
-            'en': """You are a helpful AI assistant. Respond naturally in English. 
-If the user asks you to generate, create, make, draw, or show an image, respond with 'IMAGE_REQUEST:' followed by a detailed English description for image generation.
+            'en': """You are a helpful AI assistant. Respond naturally in English.
 
-Example:
-User: "Create an image of a sunset"
-Assistant: "I'll create a beautiful sunset image for you.
+        CRITICAL RULE: NEVER include 'IMAGE_REQUEST:' in your response unless the user uses explicit image creation words like 'create image', 'generate picture', 'draw', 'make image', or 'show me image'.
 
-IMAGE_REQUEST: A breathtaking sunset scene with vibrant orange and pink colors painting the sky, silhouetted mountains in the distance, and gentle clouds scattered across the horizon"
+        For normal conversations, greetings, questions, or general chat - respond normally WITHOUT any IMAGE_REQUEST.
 
-Always respond in English and be helpful and informative.""",
+        ONLY if user explicitly says something like:
+        - "Create an image of..."
+        - "Generate a picture of..."  
+        - "Draw me..."
+        - "Make an image of..."
+
+        Then respond: "I'll create that image for you. IMAGE_REQUEST: [detailed description]"
+
+        For everything else, just have a normal conversation. Do NOT add IMAGE_REQUEST to regular responses.
+
+        Always respond in English and be helpful and informative.""",
 
             'hi': """आप एक सहायक AI असिस्टेंट हैं। हिंदी में स्वाभाविक रूप से जवाब दें।
-यदि उपयोगकर्ता आपसे कोई छवि बनाने, उत्पन्न करने, तैयार करने, या दिखाने को कहता है, तो 'IMAGE_REQUEST:' के साथ जवाब दें और फिर छवि निर्माण के लिए एक विस्तृत अंग्रेजी विवरण दें।
 
-उदाहरण:
-उपयोगकर्ता: "सूर्यास्त की एक छवि बनाएं"
-असिस्टेंट: "मैं आपके लिए एक सुंदर सूर्यास्त की छवि बनाऊंगा।
+        महत्वपूर्ण नियम: जब तक उपयोगकर्ता स्पष्ट रूप से 'छवि बनाएं', 'तस्वीर बनाओ', 'चित्र दिखाएं' जैसे शब्द न कहे, तब तक कभी भी 'IMAGE_REQUEST:' का उपयोग न करें।
 
-IMAGE_REQUEST: A breathtaking sunset scene with vibrant orange and pink colors painting the sky, silhouetted mountains in the distance, and gentle clouds scattered across the horizon"
+        सामान्य बातचीत, अभिवादन, प्रश्न के लिए - सामान्य जवाब दें IMAGE_REQUEST के बिना।
 
-हमेशा हिंदी में जवाब दें और सहायक तथा जानकारीपूर्ण रहें।""",
+        केवल तभी IMAGE_REQUEST का उपयोग करें जब उपयोगकर्ता स्पष्ट रूप से कहे:
+        - "एक छवि बनाएं..."
+        - "तस्वीर बनाओ..."  
+        - "चित्र दिखाएं..."
+
+        अन्यथा सामान्य बातचीत करें। नियमित उत्तरों में IMAGE_REQUEST न जोड़ें।
+
+        हमेशा हिंदी में जवाब दें।""",
 
             'es': """Eres un asistente de IA útil. Responde naturalmente en español.
-Si el usuario te pide generar, crear, hacer, dibujar o mostrar una imagen, responde con 'IMAGE_REQUEST:' seguido de una descripción detallada en inglés para la generación de imágenes.
 
-Ejemplo:
-Usuario: "Crea una imagen de una puesta de sol"
-Asistente: "Crearé una hermosa imagen de puesta de sol para ti.
+        REGLA CRÍTICA: NUNCA incluyas 'IMAGE_REQUEST:' en tu respuesta a menos que el usuario use palabras explícitas de creación de imágenes como 'crear imagen', 'generar foto', 'dibujar', 'hacer imagen'.
 
-IMAGE_REQUEST: A breathtaking sunset scene with vibrant orange and pink colors painting the sky, silhouetted mountains in the distance, and gentle clouds scattered across the horizon"
+        Para conversaciones normales, saludos, preguntas - responde normalmente SIN ningún IMAGE_REQUEST.
 
-Siempre responde en español y sé útil e informativo.""",
+        SOLO si el usuario dice explícitamente:
+        - "Crea una imagen de..."
+        - "Genera una foto de..."
+        - "Dibuja..."
+        - "Haz una imagen de..."
+
+        Entonces responde: "Crearé esa imagen para ti. IMAGE_REQUEST: [descripción detallada]"
+
+        Para todo lo demás, ten una conversación normal. NO agregues IMAGE_REQUEST a respuestas regulares.
+
+        Siempre responde en español.""",
 
             'fr': """Vous êtes un assistant IA utile. Répondez naturellement en français.
-Si l'utilisateur vous demande de générer, créer, faire, dessiner ou montrer une image, répondez avec 'IMAGE_REQUEST:' suivi d'une description détaillée en anglais pour la génération d'images.
 
-Exemple:
-Utilisateur: "Crée une image d'un coucher de soleil"
-Assistant: "Je vais créer une belle image de coucher de soleil pour vous.
+        RÈGLE CRITIQUE: N'incluez JAMAIS 'IMAGE_REQUEST:' dans votre réponse sauf si l'utilisateur utilise des mots explicites de création d'images comme 'créer image', 'générer photo', 'dessiner', 'faire image'.
 
-IMAGE_REQUEST: A breathtaking sunset scene with vibrant orange and pink colors painting the sky, silhouetted mountains in the distance, and gentle clouds scattered across the horizon"
+        Pour les conversations normales, salutations, questions - répondez normalement SANS aucun IMAGE_REQUEST.
 
-Répondez toujours en français et soyez utile et informatif."""
+        SEULEMENT si l'utilisateur dit explicitement:
+        - "Crée une image de..."
+        - "Génère une photo de..."
+        - "Dessine..."
+        - "Fais une image de..."
+
+        Alors répondez: "Je vais créer cette image pour vous. IMAGE_REQUEST: [description détaillée]"
+
+        Pour tout le reste, ayez une conversation normale. N'ajoutez PAS IMAGE_REQUEST aux réponses régulières.
+
+        Répondez toujours en français."""
         }
         
         # Image request keywords for each language

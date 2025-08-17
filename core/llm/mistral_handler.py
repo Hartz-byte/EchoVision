@@ -48,21 +48,8 @@ class MistralHandler:
             logger.error(f"Error loading Mistral model: {e}")
             raise
     
-    def generate_response(self, prompt: str, max_tokens: int = 512, temperature: float = 0.7, 
-                         top_p: float = 0.9, stop: Optional[list] = None) -> str:
-        """
-        Generate response from the model
-        
-        Args:
-            prompt: Input prompt
-            max_tokens: Maximum tokens to generate
-            temperature: Sampling temperature
-            top_p: Top-p sampling parameter
-            stop: Stop sequences
-            
-        Returns:
-            Generated response text
-        """
+    def generate_response(self, prompt: str, max_tokens: int = 512, temperature: float = 0.7,
+                        top_p: float = 0.9, stop: Optional[list] = None) -> str:
         try:
             if stop is None:
                 stop = ["</s>", "[INST]", "[/INST]", "\n\nUser:", "\n\nHuman:"]
@@ -79,7 +66,10 @@ class MistralHandler:
             
             generated_text = response['choices'][0]['text'].strip()
             
-            # Clean up response
+            # Debug logging
+            if "IMAGE_REQUEST:" in generated_text:
+                logger.warning(f"🎯 LLM unexpectedly generated IMAGE_REQUEST: {generated_text[:100]}...")
+            
             if not generated_text:
                 return "I apologize, but I couldn't generate a proper response. Could you please rephrase your question?"
             

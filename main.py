@@ -139,9 +139,29 @@ async def chat_endpoint(request: ChatRequest):
             parts = response.split("IMAGE_REQUEST:", 1)
             text_response = parts[0].strip()
             image_prompt = parts[1].strip() if len(parts) > 1 else ""
+            
+            # Always use text response (remove IMAGE_REQUEST from user-facing response)
             response = text_response
-
-            if image_prompt:
+            
+            # Validate if this is a legitimate image request
+            user_message_lower = request.message.lower()
+            image_keywords = [
+                'image', 'picture', 'photo', 'generate', 'create', 'draw', 'make', 'show me', 'paint', 'design',
+                'छवि', 'तस्वीर', 'फोटो', 'बनाओ', 'दिखाओ', 'चित्र', 'स्केच',
+                'imagen', 'foto', 'generar', 'crear', 'hacer', 'mostrar', 'dibujar', 'pintar', 'diseñar',
+                'image', 'photo', 'générer', 'créer', 'faire', 'montrer', 'dessiner', 'peindre', 'concevoir'
+            ]
+            
+            # Check if user actually requested an image
+            has_image_keyword = any(keyword in user_message_lower for keyword in image_keywords)
+            
+            if has_image_keyword and image_prompt:
+                # Limit prompt length for CLIP (max 77 tokens ≈ 300 characters)
+                if len(image_prompt) > 300:
+                    truncated = image_prompt[:300]
+                    last_space = truncated.rfind(' ')
+                    image_prompt = truncated[:last_space] if last_space > 200 else truncated[:300]
+                
                 try:
                     logger.info(f"🎨 Generating image for: {image_prompt[:50]}...")
                     image = image_generator.generate_image(
@@ -151,16 +171,22 @@ async def chat_endpoint(request: ChatRequest):
                         width=settings.SD_WIDTH,
                         height=settings.SD_HEIGHT
                     )
+                    
                     # Convert image to base64
                     buffer = io.BytesIO()
                     image.save(buffer, format="PNG")
                     image_data = base64.b64encode(buffer.getvalue()).decode()
+                    
                     logger.info("✅ Image generated successfully!")
                 except Exception as e:
                     logger.error(f"❌ Error generating image: {e}")
                     response += f"\n\nSorry, I couldn't generate the image due to an error: {str(e)}"
             else:
-                logger.warning("IMAGE_REQUEST: found but no prompt provided.")
+                if not has_image_keyword:
+                    logger.info("🚫 IMAGE_REQUEST detected but user didn't ask for image - skipping generation")
+                elif not image_prompt:
+                    logger.warning("⚠️ IMAGE_REQUEST found but no prompt provided - skipping generation")
+
         
         # Save conversation
         memory.add_message(request.message, response)
